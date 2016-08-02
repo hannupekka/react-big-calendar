@@ -69,6 +69,14 @@ let Calendar = React.createClass({
     view: PropTypes.string,
 
     /**
+     * Default view of the calendar.
+     *
+     * @default 'month'
+     * @controllable onView
+     */
+    defaultView: PropTypes.string,
+
+    /**
      * An array of event objects to display on the calendar
      */
     events: PropTypes.arrayOf(PropTypes.object),
@@ -228,6 +236,11 @@ let Calendar = React.createClass({
     scrollToTime: PropTypes.instanceOf(Date),
 
     /**
+     * Locale to use.
+     */
+    culture: PropTypes.string,
+
+    /**
      * Localizer specific formats, tell the Calendar how to format and display dates.
      */
     formats: PropTypes.shape({
@@ -360,7 +373,6 @@ let Calendar = React.createClass({
 
   getView() {
     const views = this.getViews();
-
     return views[this.props.view];
   },
 
@@ -388,7 +400,6 @@ let Calendar = React.createClass({
     )
 
     let ToolbarToRender = components.toolbar || Toolbar
-
     return (
       <div {...elementProps}
         className={cn('rbc-calendar', className, {
