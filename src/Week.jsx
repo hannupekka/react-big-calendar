@@ -14,11 +14,13 @@ let Week = React.createClass({
   },
 
   render() {
-    let { date } = this.props
-    let { start, end } = Week.range(date, this.props)
+    let { date, showWeekends } = this.props
+    let { start, end, endBusiness } = Week.range(date, this.props)
+
+    const endProperty = showWeekends ? end : endBusiness;
 
     return (
-      <TimeGrid {...this.props} start={start} end={end} eventOffset={15}/>
+      <TimeGrid {...this.props} start={start} end={endProperty} eventOffset={15}/>
     );
   }
 
@@ -41,8 +43,9 @@ Week.range = (date, { culture }) => {
   let firstOfWeek = localizer.startOfWeek(culture)
   let start = dates.startOf(date, 'week', firstOfWeek)
   let end = dates.endOf(date, 'week', firstOfWeek)
+  let endBusiness = dates.subtract(end, 2, 'day');
 
-  return { start, end }
+  return { start, end, endBusiness }
 }
 
 

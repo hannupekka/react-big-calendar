@@ -77,6 +77,15 @@ let Calendar = React.createClass({
     defaultView: PropTypes.string,
 
     /**
+     * Show weekends or not.
+     *
+     * @default true
+     */
+    showWeekends: PropTypes.bool,
+
+
+
+    /**
      * An array of event objects to display on the calendar
      */
     events: PropTypes.arrayOf(PropTypes.object),
@@ -347,7 +356,8 @@ let Calendar = React.createClass({
       titleAccessor: 'title',
       allDayAccessor: 'allDay',
       startAccessor: 'start',
-      endAccessor: 'end'
+      endAccessor: 'end',
+      showWeekends: true
     };
   },
 
