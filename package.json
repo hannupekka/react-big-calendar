@@ -7,12 +7,6 @@
   "license": "MIT",
   "main": "lib/index.js",
   "style": "lib/css/react-big-calendar.css",
-  "files": [
-    "src/",
-    "LICENSE",
-    "README.md",
-    "CHANGELOG.md"
-  ],
   "keywords": [
     "scheduler",
     "react-component",
@@ -34,8 +28,7 @@
     "storybook": "start-storybook -p 9002",
     "test": "npm run lint",
     "tdd": "karma start",
-    "release": "release",
-    "postinstall": "npm run build"
+    "release": "release"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0",
