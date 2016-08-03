@@ -255,17 +255,20 @@ export default class TimeGrid extends Component {
   renderHeaderCells(range){
     let { dayFormat, culture } = this.props;
 
-    return range.map((date, i) =>
-      <div
-        key={i}
-        className='rbc-header'
-        style={segStyle(1, this._slots)}
-      >
-        <a href='#' onClick={this._headerClick.bind(null, date)}>
-          { localizer.format(date, dayFormat, culture) }
-        </a>
-      </div>
-    )
+    return range.map((date, i) => {
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+      return (
+        <div
+          key={i}
+          className={cn('rbc-header', {'rbc-weekend': isWeekend})}
+          style={segStyle(1, this._slots)}
+        >
+          <a href='#' onClick={this._headerClick.bind(null, date)}>
+            { localizer.format(date, dayFormat, culture) }
+          </a>
+        </div>
+      );
+    });
   }
 
   _headerClick(date, e){

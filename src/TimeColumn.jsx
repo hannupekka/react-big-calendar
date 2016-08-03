@@ -49,6 +49,8 @@ export default class TimeColumn extends Component {
     let next = date
     let isNow = false
 
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+
     for (var i = 0; i < numGroups; i++) {
       isNow = dates.inRange(
           this.props.now
@@ -65,7 +67,7 @@ export default class TimeColumn extends Component {
 
     return (
       <div
-        className={cn(this.props.className, 'rbc-time-column')}
+        className={cn(this.props.className, 'rbc-time-column', {'rbc-weekend': isWeekend})}
         style={this.props.style}
       >
         {timeslots}
