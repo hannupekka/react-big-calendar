@@ -433,7 +433,6 @@ let Calendar = React.createClass({
           {...props}
           {...formats}
           culture={culture}
-          formats={undefined}
           events={events}
           date={current}
           components={viewComponents}

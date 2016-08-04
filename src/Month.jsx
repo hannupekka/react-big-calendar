@@ -1,6 +1,12 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import cn from 'classnames';
+import {
+    accessor
+  , elementType
+  , dateFormat
+  , views as componentViews } from './utils/propTypes';
+
 import dates from './utils/dates';
 import localizer from './localizer'
 import chunk from 'lodash/array/chunk';
@@ -18,7 +24,6 @@ import Popup from './Popup';
 import Overlay from 'react-overlays/lib/Overlay';
 import BackgroundCells from './BackgroundCells';
 
-import { dateFormat } from './utils/propTypes';
 import {
     segStyle, inRange, eventSegments
   , endOfRange, eventLevels, sortEvents } from './utils/eventLevels';
@@ -40,9 +45,54 @@ let propTypes = {
 
   dateFormat,
 
+  /**
+   * Format for the day of the month heading in the Month view.
+   */
+  dateFormat,
+
+  /**
+   * A day of the week format for Week and Day headings
+   */
+  dayFormat: dateFormat,
+  /**
+   * Week day name format for the Month week day headings.
+   */
   weekdayFormat: dateFormat,
 
+  /**
+   * Toolbar header format for the Month view.
+   */
+  monthHeaderFormat: dateFormat,
+  /**
+   * Toolbar header format for the Week views.
+   */
+  weekHeaderFormat: dateFormat,
+  /**
+   * Toolbar header format for the Day view.
+   */
+  dayHeaderFormat: dateFormat,
+
+  /**
+   * Toolbar header format for the Agenda view.
+   */
+  agendaHeaderFormat: dateFormat,
+
+  /**
+   * A time range format for selecting time slots.
+   */
+  selectRangeFormat: dateFormat,
+  agendaDateFormat: dateFormat,
+  agendaTimeFormat: dateFormat,
+  agendaTimeRangeFormat: dateFormat,
+  eventTimeRangeFormat: dateFormat,
+  timeGutterFormat: dateFormat,
+  dayRangeHeaderFormat: dateFormat,
+
   popup: React.PropTypes.bool,
+  showWeekends: React.PropTypes.bool,
+  events: React.PropTypes.arrayOf(React.PropTypes.object),
+  defaultView: React.PropTypes.string,
+  views: componentViews,
 
   popupOffset: React.PropTypes.oneOfType([
     React.PropTypes.number,
@@ -51,9 +101,86 @@ let propTypes = {
       y: React.PropTypes.number
     })
   ]),
+  components: React.PropTypes.shape({
+    event: elementType,
 
+    toolbar: elementType,
+
+    agenda: React.PropTypes.shape({
+      date: elementType,
+      time: elementType,
+      event: elementType
+    }),
+
+    day: React.PropTypes.shape({ event: elementType }),
+    week: React.PropTypes.shape({ event: elementType }),
+    month: React.PropTypes.shape({ event: elementType })
+  }),
+
+  /**
+   * String messages used throughout the component, override to provide localizations
+   */
+  messages: React.PropTypes.shape({
+    allDay: React.PropTypes.node,
+    previous: React.PropTypes.node,
+    next: React.PropTypes.node,
+    today: React.PropTypes.node,
+    month: React.PropTypes.node,
+    week: React.PropTypes.node,
+    day: React.PropTypes.node,
+    agenda: React.PropTypes.node,
+    showMore: React.PropTypes.func
+  }),
+  /**
+   * Optionally provide a function that returns an object of className or style props
+   * to be applied to the the event node.
+   *
+   * ```js
+   * function(
+   * 	event: object,
+   * 	start: date,
+   * 	end: date,
+   * 	isSelected: bool
+   * ) -> { className: string?, style: object? }
+   * ```
+   */
+  eventPropGetter: React.PropTypes.func,
+
+  /**
+   * Accessor for the event title, used to display event information. Should
+   * resolve to a `renderable` value.
+   *
+   * @type {(func|string)}
+   */
+  titleAccessor: accessor,
+
+  /**
+   * Determines whether the event should be considered an "all day" event and ignore time.
+   * Must resolve to a `boolean` value.
+   *
+   * @type {(func|string)}
+   */
+  allDayAccessor: accessor,
+
+  /**
+   * The start date/time of the event. Must resolve to a JavaScript `Date` object.
+   *
+   * @type {(func|string)}
+   */
+  startAccessor: accessor,
+
+  /**
+   * The end date/time of the event. Must resolve to a JavaScript `Date` object.
+   *
+   * @type {(func|string)}
+   */
+  endAccessor: accessor,
   onSelectEvent: React.PropTypes.func,
-  onSelectSlot: React.PropTypes.func
+  onSelectSlot: React.PropTypes.func,
+  onView: React.PropTypes.func,
+  onShowMore: React.PropTypes.func,
+  onNavigate: React.PropTypes.func,
+  onHeaderClick: React.PropTypes.func
 };
 
 

@@ -2,12 +2,17 @@ import React from 'react';
 import cn from 'classnames';
 import dates from './utils/dates';
 import { accessor as get } from './utils/accessors';
+import { accessor } from './utils/propTypes';
 
 let EventCell = React.createClass({
+  propTypes: {
+    allDayAccessor: accessor
+  },
+
   render() {
     let {
         className, event, selected, eventPropGetter
-      , startAccessor, endAccessor, titleAccessor
+      , startAccessor, endAccessor, titleAccessor, allDayAccessor
       , slotStart, slotEnd, onSelect, component, ...props } = this.props;
 
     let Component = component;
@@ -15,7 +20,7 @@ let EventCell = React.createClass({
     let title = get(event, titleAccessor)
       , end = get(event, endAccessor)
       , start = get(event, startAccessor)
-      , isAllDay = get(event, props.allDayAccessor)
+      , isAllDay = get(event, allDayAccessor)
       , continuesPrior = dates.lt(start, slotStart, 'day')
       , continuesAfter = dates.gt(end, slotEnd, 'day')
 
