@@ -256,11 +256,18 @@ export default class TimeGrid extends Component {
     let { dayFormat, culture } = this.props;
 
     return range.map((date, i) => {
-      const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+      const thisDay = new Date().getDay();
+      const dateDay = date.getDay();
+      const isWeekend = dateDay === 0 || dateDay === 6;
+      const isToday = dateDay === thisDay;
+
       return (
         <div
           key={i}
-          className={cn('rbc-header', {'rbc-weekend': isWeekend})}
+          className={cn('rbc-header', {
+            'rbc-weekend': isWeekend,
+            'rbc-now': isToday
+          })}
           style={segStyle(1, this._slots)}
         >
           <a href='#' onClick={this._headerClick.bind(null, date)}>
