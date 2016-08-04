@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import cn from 'classnames';
+import contains from 'lodash/collection/contains';
 import { segStyle } from './utils/eventLevels';
 import { notify } from './utils/helpers';
 import { dateCellSelection, slotWidth, getCellAtX, pointInBox } from './utils/selection';
@@ -11,7 +12,8 @@ class DisplayCells extends React.Component {
   static propTypes = {
     selectable: React.PropTypes.bool,
     onSelect: React.PropTypes.func,
-    slots: React.PropTypes.number
+    slots: React.PropTypes.number,
+    weekend: React.PropTypes.array
   }
 
   state = { selecting: false }
@@ -33,7 +35,7 @@ class DisplayCells extends React.Component {
   }
 
   render(){
-    let { slots } = this.props;
+    let { slots, weekend } = this.props;
     let { selecting, startIdx, endIdx } = this.state
 
     let children = [];
@@ -44,7 +46,8 @@ class DisplayCells extends React.Component {
           key={'bg_' + i}
           style={segStyle(1, slots)}
           className={cn('rbc-day-bg', {
-            'rbc-selected-cell': selecting && i >= startIdx && i <= endIdx
+            'rbc-selected-cell': selecting && i >= startIdx && i <= endIdx,
+            'rbc-weekend': contains(weekend, i)
           })}
         />
       )

@@ -11,6 +11,7 @@ import dates from './utils/dates';
 import localizer from './localizer'
 import chunk from 'lodash/array/chunk';
 import omit from 'lodash/object/omit';
+import forEach from 'lodash/collection/forEach';
 
 import { navigate } from './utils/constants';
 import { notify } from './utils/helpers';
@@ -315,6 +316,13 @@ let MonthView = React.createClass({
       self._selectTimer = setTimeout(()=> self._selectDates())
     }
 
+    const weekend = [];
+    forEach(row, (date, key) => {
+      if (date.getDay() === 0 || date.getDay() === 6) {
+        weekend.push(key);
+      }
+    });
+
     return (
     <BackgroundCells
       container={() => findDOMNode(this)}
@@ -322,6 +330,7 @@ let MonthView = React.createClass({
       slots={7}
       ref={r => this._bgRows[idx] = r}
       onSelectSlot={onSelectSlot}
+      weekend={weekend}
     />
     )
   },
@@ -387,15 +396,19 @@ let MonthView = React.createClass({
     let first = row[0]
     let last = row[row.length - 1]
 
-    return dates.range(first, last, 'day').map((day, idx) =>
-      <div
-        key={'header_' + idx}
-        className='rbc-header'
-        style={segStyle(1, 7)}
-      >
-        { localizer.format(day, format, culture) }
-      </div>
-    )
+    return dates.range(first, last, 'day').map((day, idx) => {
+      const isWeekend = day.getDay() === 0 || day.getDay() === 6;
+
+      return (
+        <div
+          key={'header_' + idx}
+          className={cn('rbc-header', {'rbc-weekend': isWeekend})}
+          style={segStyle(1, 7)}
+        >
+          { localizer.format(day, format, culture) }
+        </div>
+      );
+    });
   },
 
   _renderMeasureRows(levels, row, idx) {
