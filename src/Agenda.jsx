@@ -80,7 +80,7 @@ let Agenda = React.createClass({
   renderDay(day, events, dayKey){
     let {
         culture, components
-      , titleAccessor, agendaDateFormat } = this.props;
+      , titleAccessor, bodyAccessor, agendaDateFormat } = this.props;
 
     let EventComponent = components.event;
     let DateComponent = components.date;
@@ -100,6 +100,7 @@ let Agenda = React.createClass({
           ) : false
 
       let title = get(event, titleAccessor)
+      let body = get(event, bodyAccessor)
 
       return (
         <tr key={dayKey + '_' + idx}>
@@ -111,6 +112,10 @@ let Agenda = React.createClass({
             { EventComponent
                 ? <EventComponent event={event} title={title}/>
                 : title
+            }
+            { body
+              ? <div className='rbc-agenda-event-cell-body'>{body}</div>
+              : null
             }
           </td>
         </tr>

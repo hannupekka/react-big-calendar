@@ -189,6 +189,7 @@ export default class TimeGrid extends Component {
       <EventRow
         eventComponent={this.props.components.event}
         titleAccessor={this.props.titleAccessor}
+        bodyAccessor={this.props.bodyAccessor}
         startAccessor={this.props.startAccessor}
         endAccessor={this.props.endAccessor}
         allDayAccessor={this.props.allDayAccessor}

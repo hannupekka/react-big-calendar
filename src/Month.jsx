@@ -156,6 +156,14 @@ let propTypes = {
   titleAccessor: accessor,
 
   /**
+   * Accessor for the event body, used to display event information. Should
+   * resolve to a `renderable` value.
+   *
+   * @type {(func|string)}
+   */
+  bodyAccessor: accessor,
+
+  /**
    * Determines whether the event should be considered an "all day" event and ignore time.
    * Must resolve to a `boolean` value.
    *

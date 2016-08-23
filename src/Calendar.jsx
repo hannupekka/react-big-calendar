@@ -208,6 +208,22 @@ let Calendar = React.createClass({
     titleAccessor: accessor,
 
     /**
+     * Accessor for the event body, used to display event information. Should
+     * resolve to a `renderable` value.
+     *
+     * @type {(func|string)}
+     */
+    bodyAccessor: accessor,
+
+    /**
+     * Accessor for the event label additional text, used to display event information. Should
+     * resolve to a `renderable` value.
+     *
+     * @type {(func|string)}
+     */
+    labelRightAccessor: accessor,
+
+    /**
      * Determines whether the event should be considered an "all day" event and ignore time.
      * Must resolve to a `boolean` value.
      *
@@ -354,6 +370,8 @@ let Calendar = React.createClass({
       step: 30,
 
       titleAccessor: 'title',
+      bodyAccessor: 'body',
+      labelRightAccessor: 'labelRight',
       allDayAccessor: 'allDay',
       startAccessor: 'start',
       endAccessor: 'end',

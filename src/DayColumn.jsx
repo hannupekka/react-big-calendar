@@ -129,7 +129,8 @@ let DaySlot = React.createClass({
     let {
       events, step, min, culture, eventPropGetter
       , selected, eventTimeRangeFormat, eventComponent
-      , startAccessor, endAccessor, titleAccessor } = this.props;
+      , startAccessor, endAccessor, titleAccessor, bodyAccessor
+      , labelRightAccessor } = this.props;
 
     let EventComponent = eventComponent
       , lastLeftOffset = 0;
@@ -148,7 +149,9 @@ let DaySlot = React.createClass({
       let style = this._slotStyle(startSlot, endSlot, lastLeftOffset)
 
       let title = get(event, titleAccessor)
+      let body = get(event, bodyAccessor);
       let label = localizer.format({ start, end }, eventTimeRangeFormat, culture);
+      let labelRight = get(event, labelRightAccessor);
       let _isSelected = isSelected(event, selected);
 
       if (eventPropGetter)
@@ -165,11 +168,21 @@ let DaySlot = React.createClass({
             'rbc-event-overlaps': lastLeftOffset !== 0
           })}
         >
-          <div className='rbc-event-label'>{label}</div>
+          <div className='rbc-event-label'>
+            {label}
+            { labelRight
+              ? <span className='rbc-event-label-right'>{labelRight}</span>
+              : null
+            }
+          </div>
           <div className='rbc-event-content'>
             { EventComponent
               ? <EventComponent event={event} title={title}/>
               : title
+            }
+            { body
+              ? <div className='rbc-event-content-body'>{body}</div>
+              : null
             }
           </div>
         </div>
