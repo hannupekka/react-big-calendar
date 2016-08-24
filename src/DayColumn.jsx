@@ -169,9 +169,9 @@ let DaySlot = React.createClass({
           })}
         >
           <div className='rbc-event-label'>
-            {label}
+            <div className='rbc-event-label-left'>{label}</div>
             { labelRight
-              ? <span className='rbc-event-label-right'>{labelRight}</span>
+              ? <div className='rbc-event-label-right'>{labelRight}</div>
               : null
             }
           </div>
