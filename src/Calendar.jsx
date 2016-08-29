@@ -83,7 +83,12 @@ let Calendar = React.createClass({
      */
     showWeekends: PropTypes.bool,
 
-
+    /**
+     * Offset-% for overlapping events.
+     *
+     * @default true
+     */
+    eventOffset: PropTypes.number,
 
     /**
      * An array of event objects to display on the calendar
@@ -375,6 +380,7 @@ let Calendar = React.createClass({
       allDayAccessor: 'allDay',
       startAccessor: 'start',
       endAccessor: 'end',
+      eventOffset: 15,
       showWeekends: true
     };
   },

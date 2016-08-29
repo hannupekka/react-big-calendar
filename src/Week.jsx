@@ -14,13 +14,13 @@ let Week = React.createClass({
   },
 
   render() {
-    let { date, showWeekends } = this.props
+    let { date, showWeekends, eventOffset } = this.props
     let { start, end, endBusiness } = Week.range(date, this.props)
 
     const endProperty = showWeekends ? end : endBusiness;
 
     return (
-      <TimeGrid {...this.props} start={start} end={endProperty} eventOffset={15}/>
+      <TimeGrid {...this.props} start={start} end={endProperty} eventOffset={eventOffset}/>
     );
   }
 
